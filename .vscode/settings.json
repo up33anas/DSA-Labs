@@ -1,0 +1,14 @@
+{
+  "files.associations": {
+    "vector": "cpp",
+    "xstring": "cpp",
+    "xutility": "cpp",
+    "iostream": "cpp",
+    "algorithm": "cpp",
+    "complex": "cpp",
+    "optional": "cpp",
+    "system_error": "cpp",
+    "type_traits": "cpp",
+    "xtr1common": "cpp"
+  }
+}

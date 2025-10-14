@@ -12,8 +12,8 @@ def CountingSortForRadix(input, exp):
 
     for i in range(n - 1, -1, -1):
         index = (input[i] // exp) % 10
-        output[count[index] - 1] = input[i]
         count[index] -= 1
+        output[count[index]] = input[i]
 
     for i in range(n):
         input[i] = output[i]

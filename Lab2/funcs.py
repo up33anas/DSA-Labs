@@ -1,6 +1,5 @@
 import random, csv
 
-
 # Generate a random array
 def RandomArray(size):
     return [random.randint(0, 100000) for _ in range(size)]
