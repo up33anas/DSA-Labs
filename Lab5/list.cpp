@@ -2,40 +2,12 @@
 using namespace std;
 
 struct Node {
-    int data;       // The value stored in the node
-    Node* next;     // Pointer to the next node
+    public:
+        int data;       // The value stored in the node
+        Node* next;     // Pointer to the next node
+    Node(int val, Node* nxt = nullptr) : data(val), next(nxt) {}
 };
 
-// Function to merge two sorted lists
-Node* sortedMerge(Node* left, Node* right) {
-    if(!left) return right;
-    if(!right) return left;
-
-    Node* result = nullptr;
-
-    if(left->data <= right->data) {
-        result = left;
-        result->next = sortedMerge(left->next, right);
-    } else {
-        result = right;
-        result->next = sortedMerge(left, right->next);    
-    }
-    return result;
-}
-
-// Function to find the middle of the linked list
-Node* getMiddle(Node* head) {
-    if(!head) return head;
-
-    Node* slow = head;
-    Node* fast = head->next;
-
-    while(fast && fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-    return slow;
-}
 
 // // Merge sort for lists
 // Node* mergeSort(Node* head) {
@@ -55,8 +27,7 @@ public:
 
     // Insert at the given index 
     Node* insertNode(int index, int x) {
-        Node* newNode = new Node();
-        newNode->data = x;
+        Node* newNode = new Node(x);
         newNode->next = nullptr;
 
         if(index == 1) {
@@ -202,7 +173,7 @@ public:
         current = head;
         prev = nullptr;
 
-        while(current->next != nullptr) {
+        while(current != nullptr) {
             next = current->next;
             current->next = prev;
             prev = current;
@@ -222,33 +193,131 @@ public:
 
         middle->next = nullptr;
 
-        Node* left = this->sortList(list);
-        Node* right = this->sortList(nextToMiddle);
+        Node* left = sortList(list);
+        Node* right = sortList(nextToMiddle);
 
-        Node* sortedList = sortedMerge(left, right);
-        return sortedList;
+        return mergeLists(left, right);
     };
+    
+    // Helper to sort the class’s main list
+    void sort() {
+        head = sortList(head);
+    }
 
     // Removes duplicates from list 
     Node* removeDuplicates(Node *list) {
+        Node* current = this->sortList(list);
+        while(current && current->next) {
+            if(current->data == current->next->data) {
+                Node* duplicate = current->next;
+                current->next = current->next->next;
+                delete duplicate;
+            } else {
+                current = current->next;
+            }
+        }
+        return head;
+    };
 
-    }; 
-
-    // Merges two lists
+    // Function to merge two sorted lists
     Node* mergeLists(Node *list1, Node *list2) {
+        if(!list1) return list2;
+        if(!list2) return list1;
 
-    }; 
+        Node* result = nullptr;
+
+        if(list1->data <= list2->data) {
+            result = list1;
+            result->next = this->mergeLists(list1->next, list2);
+        } else {
+            result = list2;
+            result->next = this->mergeLists(list1, list2->next);    
+        }
+        return result;
+    }
 
     // Results contains intersection of two lists 
-    Node* interestLists(Node *list1, Node *list2) {
-        
-    };
+    Node* intersectLists(Node* list1, Node* list2) {
+        Node* result = nullptr;
+        Node* tail = nullptr;
+
+        for (Node* temp1 = list1; temp1 != nullptr; temp1 = temp1->next) {
+            for (Node* temp2 = list2; temp2 != nullptr; temp2 = temp2->next) {
+                if (temp1->data == temp2->data) {
+                    // Check if already in result (optional)
+                    Node* newNode = new Node(temp1->data);
+                    if (!result) {
+                        result = newNode;
+                        tail = newNode;
+                    } else {
+                        tail->next = newNode;
+                        tail = newNode;
+                    }
+                    break; // break inner loop, avoid duplicates
+                }
+            }
+        }
+        return result;
+    }
+
+    void display(Node* node) {
+        while (node) {
+            cout << node->data << " ";
+            node = node->next;
+        }
+        cout << "\n";
+    }
 
 private: 
     Node* head; 
+
+    // Function to find the middle of the linked list
+    Node* getMiddle(Node* head) {
+        if(!head) return head;
+
+        Node* slow = head;
+        Node* fast = head->next;
+
+        while(fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
 };
 
 int main() {
+    List list1, list2;
+
+    list1.insertAtEnd(4);
+    list1.insertAtEnd(2);
+    list1.insertAtEnd(8);
+    list1.insertAtEnd(6);
+
+    list2.insertAtEnd(1);
+    list2.insertAtEnd(2);
+    list2.insertAtEnd(8);
+    list2.insertAtEnd(9);
+
+    cout << "List 1: ";
+    list1.displayList();
+    cout << "List 2: ";
+    list2.displayList();
+
+    // Sort both
+    list1.sort();
+    list2.sort();
+
+    cout << "\nSorted List 1: ";
+    list1.displayList();
+    cout << "Sorted List 2: ";
+    list2.displayList();
+
+    // Intersection
+    Node* intersect = list1.intersectLists(list1.sortList(list1.sortList(nullptr)), list2.sortList(list2.sortList(nullptr)));
+
+    cout << "\nIntersection: ";
+    list1.display(intersect);
 
     return 0;
 }
