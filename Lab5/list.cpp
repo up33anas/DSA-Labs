@@ -6,6 +6,43 @@ struct Node {
     Node* next;     // Pointer to the next node
 };
 
+// Function to merge two sorted lists
+Node* sortedMerge(Node* left, Node* right) {
+    if(!left) return right;
+    if(!right) return left;
+
+    Node* result = nullptr;
+
+    if(left->data <= right->data) {
+        result = left;
+        result->next = sortedMerge(left->next, right);
+    } else {
+        result = right;
+        result->next = sortedMerge(left, right->next);    
+    }
+    return result;
+}
+
+// Function to find the middle of the linked list
+Node* getMiddle(Node* head) {
+    if(!head) return head;
+
+    Node* slow = head;
+    Node* fast = head->next;
+
+    while(fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+// // Merge sort for lists
+// Node* mergeSort(Node* head) {
+    
+// }
+
+// Linked List class
 class List { 
 public: 
     // Constructor 
@@ -178,20 +215,24 @@ public:
 
     // Sorts the input-ed list
     Node* sortList(Node *list) {
-        Node* sortedList;
+        if(!list || !list->next) return list;
 
-        Node* min = list;
-        while(list->next) {
-            if(list->data < min->data) {
-                min = list
-            }
-        }
-    }; 
+        Node* middle = getMiddle(list);
+        Node* nextToMiddle = middle->next;
+
+        middle->next = nullptr;
+
+        Node* left = this->sortList(list);
+        Node* right = this->sortList(nextToMiddle);
+
+        Node* sortedList = sortedMerge(left, right);
+        return sortedList;
+    };
 
     // Removes duplicates from list 
     Node* removeDuplicates(Node *list) {
 
-    };
+    }; 
 
     // Merges two lists
     Node* mergeLists(Node *list1, Node *list2) {
@@ -200,7 +241,7 @@ public:
 
     // Results contains intersection of two lists 
     Node* interestLists(Node *list1, Node *list2) {
-
+        
     };
 
 private: 
