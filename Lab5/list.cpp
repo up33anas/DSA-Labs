@@ -243,7 +243,6 @@ public:
         for (Node* temp1 = list1; temp1 != nullptr; temp1 = temp1->next) {
             for (Node* temp2 = list2; temp2 != nullptr; temp2 = temp2->next) {
                 if (temp1->data == temp2->data) {
-                    // Check if already in result (optional)
                     Node* newNode = new Node(temp1->data);
                     if (!result) {
                         result = newNode;

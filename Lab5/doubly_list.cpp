@@ -59,7 +59,6 @@ public:
     }
 
     void displayForward() {
-        cout << "this is display";
         DNode* temp = head;
         while (temp) {
             cout << temp->data << " ";
