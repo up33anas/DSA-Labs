@@ -51,8 +51,7 @@ public:
 
     // Insert at start of list 
     Node* insertAtHead(int x) {
-        Node* newNode = new Node();
-        newNode->data = x;
+        Node* newNode = new Node(x);
         newNode->next = head;
 
         return head = newNode;
@@ -198,7 +197,7 @@ public:
 
         return mergeLists(left, right);
     };
-    
+
     // Helper to sort the class’s main list
     void sort() {
         head = sortList(head);
