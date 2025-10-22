@@ -5,6 +5,7 @@
     "ios": "cpp",
     "xiosbase": "cpp",
     "algorithm": "cpp",
-    "format": "cpp"
+    "format": "cpp",
+    "iostream": "cpp"
   }
 }
