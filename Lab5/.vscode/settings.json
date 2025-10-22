@@ -3,6 +3,8 @@
     "xstring": "cpp",
     "xutility": "cpp",
     "ios": "cpp",
-    "xiosbase": "cpp"
+    "xiosbase": "cpp",
+    "algorithm": "cpp",
+    "format": "cpp"
   }
 }

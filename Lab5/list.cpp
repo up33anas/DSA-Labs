@@ -9,11 +9,6 @@ struct Node {
 };
 
 
-// // Merge sort for lists
-// Node* mergeSort(Node* head) {
-    
-// }
-
 // Linked List class
 class List { 
 public: 
