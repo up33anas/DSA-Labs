@@ -7,17 +7,19 @@ using namespace std;
         Stack Class
     =======================
 */
+
+template <typename T>
 class Stack
 {
 private:
-    string* arr;
+    T* arr;
     int capacity;
     int top;
 public:
     // Constructor
     Stack(int size = 15) { 
         capacity = size;
-        arr = new string[capacity];
+        arr = new T[capacity];
         top = -1;
     }
 
@@ -37,26 +39,20 @@ public:
     }
 
     // Push an element onto the stack
-    void push(string x) {
+    void push(T x) {
         if (isFull()) throw overflow_error("Stack Overflow!");
         arr[++top] = x;
     }
 
     // Pop the top element
-    string pop() {
-        if (isEmpty()) {
-            cout << "Stack Underflow!\n";
-            return "";
-        }
+    T pop() {
+        if (isEmpty()) throw underflow_error("Stack Underflow!");
         return arr[top--];
     }
 
     // Peek at the top element
-    string peek() const {
-        if (isEmpty()) {
-            cout << "Stack is empty!\n";
-            return "";
-        }
+    T peek() const {
+        if (isEmpty()) throw underflow_error("Stack is empty");
         return arr[top];
     }
 
@@ -68,6 +64,7 @@ public:
     // Display all elements
     void display() const {
         if (isEmpty()) throw underflow_error("Stack is empty!");
+
         cout << "Stack elements (bottom --> top): ";
         for (int i = 0; i <= top; i++)
             cout << arr[i] << " ";
